@@ -94,6 +94,7 @@ button:hover{background:#f5f5f5}
 .btn-b{background:#185FA5;color:white;border-color:#185FA5}
 .btn-r{background:#E24B4A;color:white;border-color:#E24B4A}
 .btn-wa{background:#25D366;color:white;border-color:#25D366}
+.btn-sms{background:#5856D6;color:white;border-color:#5856D6}
 .btn-sm{padding:3px 7px;font-size:10px}
 .fl{font-size:10px;color:#888;margin-bottom:3px;display:block;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
 input,select,textarea{font-size:12px;padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:7px;background:white;color:#1a1a1a;width:100%;transition:border .15s}
@@ -167,9 +168,69 @@ textarea{resize:vertical;min-height:60px}
       <div class="login-link" style="margin-top:10px;font-size:11px;color:#aaa">Jina: <b>admin</b> &nbsp;|&nbsp; Nywila: <b>nyumba2026</b></div>
     </div>
 
-    <!-- Tenant Login / Register Form -->
+    <!-- Tenant Login Form -->
     <div class="login-form" id="form-tenant" style="display:none">
-      <div id="t-login-view">
+
+      <!-- Choice buttons -->
+      <div id="t-choice-view">
+        <h2 style="text-align:center;margin-bottom:16px">Wewe ni mpangaji wa aina gani?</h2>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:4px">
+          <div class="portal-card" onclick="showTenantView('new')" style="border-color:#e8e8e8">
+            <div class="picon" style="background:#E1F5EE">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#1D9E75"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+            </div>
+            <div class="ptitle">Mpangaji Mpya</div>
+            <div class="psub">Nataka kupanga kwa mara ya kwanza</div>
+          </div>
+          <div class="portal-card" onclick="showTenantView('existing')" style="border-color:#e8e8e8">
+            <div class="picon" style="background:#E6F1FB">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#185FA5"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
+            <div class="ptitle">Mpangaji Anayeendelea</div>
+            <div class="psub">Nina akaunti tayari</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Tenant Form -->
+      <div id="t-new-view" style="display:none">
+        <h2>Ombi la Kupanga</h2>
+        <div class="info-box" style="margin-bottom:12px">Jaza taarifa zako. Mmiliki atawasiliana nawe kwa WhatsApp kukuarifu.</div>
+        <div class="login-err" id="tnew-err">Tafadhali jaza sehemu zote zinazohitajika.</div>
+        <div class="fg" style="margin-bottom:10px">
+          <div><label class="fl">Jina la Kwanza *</label><input id="tn-fn" placeholder="Jina la kwanza"></div>
+          <div><label class="fl">Jina la Familia *</label><input id="tn-ln" placeholder="Jina la familia"></div>
+          <div><label class="fl">Nambari ya Simu *</label><input type="tel" id="tn-ph" placeholder="07XX XXX XXX"></div>
+          <div><label class="fl">Kitambulisho (NID)</label><input id="tn-nid" placeholder="Nambari ya kitambulisho"></div>
+          <div style="grid-column:1/-1"><label class="fl">Anuani ya Sasa</label><input id="tn-addr" placeholder="Mtaa, kata, wilaya, mkoa"></div>
+          <div><label class="fl">Kazi / Shughuli</label><input id="tn-kazi" placeholder="Mwajiriwa / Biashara"></div>
+          <div><label class="fl">Aina ya Mali Unayoomba *</label>
+            <select id="tn-aina">
+              <option value="">Chagua aina...</option>
+              <option value="Eneo">Eneo</option>
+              <option value="Fremu">Fremu</option>
+              <option value="Chumba">Chumba</option>
+              <option value="Nyumba">Nyumba</option>
+            </select>
+          </div>
+          <div><label class="fl">Tarehe ya Kuanza</label><input type="date" id="tn-start"></div>
+          <div style="grid-column:1/-1"><label class="fl">Jina la Mdhamini *</label><input id="tn-guar" placeholder="Jina kamili la mdhamini"></div>
+          <div><label class="fl">Simu ya Mdhamini</label><input id="tn-guar-ph" placeholder="07XX XXX XXX"></div>
+        </div>
+        <div style="background:#f0faf5;border:1px solid #9FE1CB;border-radius:8px;padding:12px;margin-bottom:12px">
+          <div style="font-size:11px;font-weight:700;color:#085041;margin-bottom:8px">Weka Nywila — utatumia kuingia mfumo baadaye</div>
+          <div class="fg">
+            <div><label class="fl">Nywila Mpya *</label><input type="password" id="tn-pw1" placeholder="Angalau herufi 4"></div>
+            <div><label class="fl">Thibitisha Nywila *</label><input type="password" id="tn-pw2" placeholder="Rudia nywila"></div>
+          </div>
+        </div>
+        <div class="login-err" id="tnew-pw-err" style="display:none"></div>
+        <button class="btn-login" style="background:#1D9E75" onclick="submitNewTenant()">Wasilisha Ombi</button>
+        <div class="login-link"><a onclick="showTenantView('choice')">← Rudi</a></div>
+      </div>
+
+      <!-- Existing Tenant Login -->
+      <div id="t-login-view" style="display:none">
         <h2>Ingia — Mpangaji</h2>
         <div class="login-err" id="tenant-err">Nambari ya simu au nywila si sahihi.</div>
         <div class="form-group">
@@ -181,44 +242,15 @@ textarea{resize:vertical;min-height:60px}
           <input type="password" id="t-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')loginTenant()">
         </div>
         <button class="btn-login blue" onclick="loginTenant()">Ingia</button>
-        <div class="login-link">Bado huna akaunti? <a onclick="showTenantReg()">Jisajili hapa</a></div>
+        <div style="background:#FFF3CD;border-radius:8px;padding:10px 12px;margin-top:12px;font-size:11px;color:#856404">
+          <div style="font-weight:700;margin-bottom:5px">Vidokezo vya Nywila:</div>
+          <div>• Kama ulijisajili mwenyewe — tumia nywila uliyoweka kwenye fomu</div>
+          <div style="margin-top:3px">• Kama mmiliki ndiye aliyekuweka — nywila yako ni <b>tarakimu 4 za mwisho za simu yako</b></div>
+          <div style="margin-top:3px;color:#b8860b">Mfano: Simu 0712345<b>6789</b> → Nywila: <b>6789</b></div>
+        </div>
+        <div class="login-link"><a onclick="showTenantView('choice')">← Rudi</a></div>
       </div>
-      <div id="t-reg-view" style="display:none">
-        <h2>Jisajili — Mpangaji Mpya</h2>
-        <div class="info-box">Baada ya kujisajili, mmiliki atathbitisha akaunti yako.</div>
-        <div class="step-bar"><div class="step cur" id="tr1">1. Taarifa</div><div class="step" id="tr2">2. Kazi</div><div class="step" id="tr3">3. Nywila</div></div>
-        <div id="treg-s1">
-          <div class="fg" style="margin-bottom:10px">
-            <div><label class="fl">Jina la Kwanza *</label><input id="tr-fn" placeholder="Jina la kwanza"></div>
-            <div><label class="fl">Jina la Familia *</label><input id="tr-ln" placeholder="Jina la familia"></div>
-            <div><label class="fl">Simu *</label><input id="tr-ph" placeholder="07XX XXX XXX"></div>
-            <div><label class="fl">NID</label><input id="tr-nid" placeholder="Nambari ya kitambulisho"></div>
-            <div style="grid-column:1/-1"><label class="fl">Anwani</label><input id="tr-addr" placeholder="Mtaa, wilaya, mkoa"></div>
-          </div>
-          <div style="text-align:right"><button class="btn-g" onclick="tregStep(2)">Endelea →</button></div>
-        </div>
-        <div id="treg-s2" style="display:none">
-          <div class="fg" style="margin-bottom:10px">
-            <div><label class="fl">Kazi</label><input id="tr-kazi" placeholder="Mwajiriwa / Biashara"></div>
-            <div><label class="fl">Mwajiri</label><input placeholder="Jina la mwajiri"></div>
-            <div><label class="fl">Mali Unayoomba</label><select id="tr-mali"><option value="">Chagua mali...</option></select></div>
-            <div><label class="fl">Tarehe ya Kuanza</label><input type="date" id="tr-start"></div>
-            <div style="grid-column:1/-1"><label class="fl">Jina la Mdhamini *</label><input id="tr-guar" placeholder="Jina kamili la mdhamini"></div>
-            <div><label class="fl">Simu ya Mdhamini</label><input placeholder="07XX XXX XXX"></div>
-          </div>
-          <div style="display:flex;gap:8px;justify-content:flex-end"><button onclick="tregStep(1)">← Rudi</button><button class="btn-g" onclick="tregStep(3)">Endelea →</button></div>
-        </div>
-        <div id="treg-s3" style="display:none">
-          <div class="fg" style="margin-bottom:10px">
-            <div><label class="fl">Nywila Mpya *</label><input type="password" id="tr-pw1" placeholder="Nywila yako"></div>
-            <div><label class="fl">Thibitisha Nywila *</label><input type="password" id="tr-pw2" placeholder="Rudia nywila"></div>
-          </div>
-          <div style="background:#f5f5f5;padding:10px;border-radius:7px;font-size:11px;color:#666;line-height:1.7;margin-bottom:10px">Nakubali masharti: (1) Kodi inalipwa kabla ya tarehe 5 kila mwezi. (2) Uharibifu wa nyumba utanibeba gharama. (3) Notisi ya miezi 2 kabla ya kuhamia.</div>
-          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;margin-bottom:12px"><input type="checkbox" id="tr-agree" style="width:auto"> Nakubali masharti yote</label>
-          <div style="display:flex;gap:8px;justify-content:flex-end"><button onclick="tregStep(2)">← Rudi</button><button class="btn-login blue" style="width:auto;padding:8px 20px" onclick="submitTenantReg()">Wasilisha Maombi</button></div>
-        </div>
-        <div class="login-link"><a onclick="showTenantLogin()">← Rudi Kuingia</a></div>
-      </div>
+
     </div>
   </div>
 </div>
@@ -232,7 +264,6 @@ textarea{resize:vertical;min-height:60px}
     </div>
     <div class="hdr-right">
       <div class="nav" id="owner-nav"></div>
-      <div class="user-badge"><div class="avatar" style="background:#1D9E75">MM</div>Mmiliki</div>
       <button class="btn-logout" onclick="logout()">Toka</button>
     </div>
   </div>
@@ -245,7 +276,7 @@ textarea{resize:vertical;min-height:60px}
       <div class="scard"><div class="slb">Hawajalipa</div><div class="sv" id="s-bad" style="color:#E24B4A">0</div><div class="ssb" style="color:#E24B4A">mwezi huu</div></div>
     </div>
     <div class="two">
-      <div class="sec"><div class="sech"><span class="st">Tahadhari za Malipo</span><button class="btn-g" onclick="sendWAAll()">Tuma WA Wote</button></div><div id="d-alerts"></div></div>
+      <div class="sec"><div class="sech"><span class="st">Tahadhari za Malipo</span><div style="display:flex;gap:6px"><button class="btn-g" onclick="sendWAAll()">Tuma WA Wote</button><button class="btn-sms btn-sm" style="padding:5px 10px" onclick="sendSMSAll()">SMS Wote</button></div></div><div id="d-alerts"></div></div>
       <div class="sec"><div class="sech"><span class="st">Ukusanyaji — Machi 2026</span></div><div id="d-prog"></div></div>
     </div>
     <div class="sec">
@@ -414,7 +445,7 @@ textarea{resize:vertical;min-height:60px}
         </select>
       </div>
       <div style="margin-bottom:10px"><label class="fl">Ujumbe</label><textarea id="t-msg-txt" rows="4" placeholder="Andika ujumbe wako..."></textarea></div>
-      <button class="btn-wa" onclick="tenantSendMsg()">Tuma WhatsApp kwa Mmiliki</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn-wa" onclick="tenantSendMsg()">Tuma WhatsApp kwa Mmiliki</button><button class="btn-sms" onclick="tenantSendSMS()">Tuma SMS kwa Mmiliki</button></div>
     </div>
 
     <div class="tenant-card">
@@ -434,12 +465,25 @@ textarea{resize:vertical;min-height:60px}
   <div class="mbox"><div class="mtit">Ongeza Mali Mpya</div>
     <div class="fg">
       <div><label class="fl">Jina / Nambari *</label><input id="nm-n" placeholder="Nyumba G1"></div>
-      <div><label class="fl">Aina</label><select id="nm-a"><option>Nyumba</option><option>Duka</option><option>Ofisi</option><option>Godown</option></select></div>
+      <div><label class="fl">Aina</label><select id="nm-a"><option value="Eneo">Eneo</option><option value="Fremu">Fremu</option><option value="Chumba">Chumba</option><option value="Nyumba">Nyumba</option></select></div>
       <div style="grid-column:1/-1"><label class="fl">Mahali</label><input id="nm-m" placeholder="Mtaa, wilaya"></div>
       <div><label class="fl">Kodi/mwezi (TSh)</label><input type="number" id="nm-k" placeholder="0"></div>
       <div><label class="fl">Hali</label><select id="nm-h"><option>Haijakaa</option><option>Imepangishwa</option><option>Inakarabatiwa</option></select></div>
     </div>
     <div class="mft"><button onclick="closeOv('ov-add-mali')">Ghairi</button><button class="btn-g" onclick="saveMali()">Hifadhi</button></div>
+  </div>
+</div>
+
+<div class="ov" id="ov-edit-mali">
+  <div class="mbox"><div class="mtit">Hariri Mali</div>
+    <div class="fg">
+      <div><label class="fl">Jina / Nambari *</label><input id="em-n" placeholder="Nyumba G1"></div>
+      <div><label class="fl">Aina</label><select id="em-a"><option value="Eneo">Eneo</option><option value="Fremu">Fremu</option><option value="Chumba">Chumba</option><option value="Nyumba">Nyumba</option></select></div>
+      <div style="grid-column:1/-1"><label class="fl">Mahali</label><input id="em-m" placeholder="Mtaa, wilaya"></div>
+      <div><label class="fl">Kodi/mwezi (TSh)</label><input type="number" id="em-k" placeholder="0"></div>
+      <div><label class="fl">Hali</label><select id="em-h"><option>Haijakaa</option><option>Imepangishwa</option><option>Inakarabatiwa</option></select></div>
+    </div>
+    <div class="mft"><button onclick="closeOv('ov-edit-mali')">Ghairi</button><button class="btn-g" onclick="saveEditMali()">Hifadhi Mabadiliko</button></div>
   </div>
 </div>
 
@@ -549,12 +593,45 @@ textarea{resize:vertical;min-height:60px}
   <div class="mbox"><div class="mtit">Thibitisha Ombi la Mpangaji</div>
     <div id="approve-detail" style="margin-bottom:14px"></div>
     <div class="fg">
-      <div><label class="fl">Mali Anayopewa *</label><select id="ap-mali"></select></div>
+      <div><label class="fl">Mali Anayopewa *</label>
+        <select id="ap-mali" onchange="autoFillApKodi()">
+          <option value="">— Chagua mali —</option>
+        </select>
+      </div>
       <div><label class="fl">Kodi (TSh)</label><input type="number" id="ap-kodi" placeholder="Itajazwa kiotomasi"></div>
       <div><label class="fl">Mwanzo wa Mkataba</label><input type="date" id="ap-start"></div>
       <div><label class="fl">Mwisho wa Mkataba</label><input type="date" id="ap-end"></div>
     </div>
-    <div class="mft"><button onclick="closeOv('ov-approve-wp')">Ghairi</button><button class="btn-r btn-sm" onclick="rejectPending()" style="padding:6px 12px">Kataa</button><button class="btn-g" onclick="approvePending()">Thibitisha &amp; Ongeza</button></div>
+    <div style="border-top:1px solid #eee;margin-top:12px;padding-top:12px">
+      <div style="font-size:12px;font-weight:700;margin-bottom:8px">Tuma Mkataba kwa Mpangaji</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+        <div>
+          <label class="fl">Pakia Mkataba (PDF/Picha)</label>
+          <div class="upload-zone" id="ap-up-zone" onclick="document.getElementById('ap-up-in').click()" style="padding:12px;min-height:60px">
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#aaa;margin-bottom:4px"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 7V3.5L18.5 9H13z"/></svg>
+            <div style="font-size:11px;font-weight:700;color:#555" id="ap-up-lbl">Bonyeza kupakia</div>
+            <div style="font-size:10px;color:#888">PDF, JPG, PNG</div>
+            <input type="file" id="ap-up-in" accept=".pdf,.jpg,.jpeg,.png" style="display:none" onchange="handleApproveUpload(this)">
+          </div>
+        </div>
+        <div>
+          <label class="fl">Au Weka Kiungo (Link)</label>
+          <input type="url" id="ap-mk-link" placeholder="https://drive.google.com/...">
+          <div style="font-size:10px;color:#888;margin-top:4px">Google Drive, Dropbox, n.k.</div>
+        </div>
+      </div>
+      <div id="ap-mk-preview" style="display:none;background:#E1F5EE;border-radius:7px;padding:8px 10px;font-size:11px;color:#085041;margin-bottom:8px">
+        Mkataba umepakiwa: <span id="ap-mk-fname" style="font-weight:700"></span>
+      </div>
+      <div style="background:#f5f5f5;border-radius:7px;padding:8px 10px;font-size:11px;color:#666;margin-bottom:8px">
+        Mkataba utatumwa mpangaji kwa WhatsApp mara tu utakapobonyeza <strong>Thibitisha &amp; Tuma</strong>.
+      </div>
+    </div>
+    <div class="mft">
+      <button onclick="closeOv('ov-approve-wp')">Ghairi</button>
+      <button class="btn-r btn-sm" onclick="rejectPending()" style="padding:6px 12px">Kataa</button>
+      <button class="btn-g" onclick="approvePending()">Thibitisha &amp; Tuma</button>
+    </div>
   </div>
 </div>
 
@@ -622,7 +699,7 @@ function selectPortal(type){
   document.getElementById('form-owner').style.display='none';
   document.getElementById('form-tenant').style.display='none';
   document.getElementById('form-'+type).style.display='block';
-  if(type==='tenant') fillTenantRegMali();
+  if(type==='tenant') showTenantView('choice');
 }
 
 /* ===== OWNER LOGIN ===== */
@@ -642,22 +719,97 @@ function loginOwner(){
   }
 }
 
+/* ===== TENANT PORTAL NAVIGATION ===== */
+function showTenantView(view){
+  ['t-choice-view','t-new-view','t-login-view'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.style.display='none';
+  });
+  var map={choice:'t-choice-view',new:'t-new-view',existing:'t-login-view'};
+  var target=document.getElementById(map[view]);
+  if(target) target.style.display='block';
+}
+
+function submitNewTenant(){
+  var fn=document.getElementById('tn-fn').value.trim();
+  var ln=document.getElementById('tn-ln').value.trim();
+  var ph=normPhone(document.getElementById('tn-ph').value.trim());
+  var aina=document.getElementById('tn-aina').value;
+  var guar=document.getElementById('tn-guar').value.trim();
+  var pw1=document.getElementById('tn-pw1')?document.getElementById('tn-pw1').value:'';
+  var pw2=document.getElementById('tn-pw2')?document.getElementById('tn-pw2').value:'';
+  var err=document.getElementById('tnew-err');
+  var pwErr=document.getElementById('tnew-pw-err');
+  if(pwErr)pwErr.style.display='none';
+  if(!fn||!ln||!ph||!aina||!guar){
+    err.textContent='Tafadhali jaza sehemu zote zinazohitajika (*).';
+    err.style.display='block';return;
+  }
+  if(!pw1||pw1.length<4){
+    if(pwErr){pwErr.textContent='Nywila lazima iwe na angalau herufi/tarakimu 4.';pwErr.style.display='block';}
+    return;
+  }
+  if(pw1!==pw2){
+    if(pwErr){pwErr.textContent='Nywila hazifanani. Jaribu tena.';pwErr.style.display='block';}
+    return;
+  }
+  var alreadyExists=wapangaji.find(function(w){return normPhone(w.s)===ph&&w.active});
+  var alreadyPending=pendingWp.find(function(p){return normPhone(p.ph)===ph});
+  if(alreadyExists||alreadyPending){
+    err.textContent='Nambari hii ya simu imeshasajiliwa. Ingia kwa "Mpangaji Anayeendelea".';
+    err.style.display='block';return;
+  }
+  err.style.display='none';
+  pendingWp.push({
+    id:'p'+Date.now(),fn:fn,ln:ln,ph:ph,pw:pw1,
+    nid:document.getElementById('tn-nid').value,
+    addr:document.getElementById('tn-addr').value,
+    kazi:document.getElementById('tn-kazi').value,
+    aina:aina,
+    start:document.getElementById('tn-start').value,
+    guar:guar,
+    guarPh:document.getElementById('tn-guar-ph').value,
+    date:new Date().toISOString().slice(0,10)
+  });
+  document.getElementById('t-new-view').innerHTML=
+    '<div style="text-align:center;padding:2rem 0">'
+    +'<div style="width:56px;height:56px;background:#E1F5EE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px">'
+    +'<svg width="28" height="28" viewBox="0 0 24 24" fill="#1D9E75"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>'
+    +'<div style="font-size:18px;font-weight:700;margin-bottom:8px">Ombi Limewasilishwa!</div>'
+    +'<div style="font-size:13px;color:#555;line-height:1.7;margin-bottom:16px">Habari '+fn+', ombi lako limepokewa.<br>Mmiliki ataona na atawasiliana nawe hivi karibuni.</div>'
+    +'<div style="background:#E1F5EE;border-radius:10px;padding:14px;text-align:left;margin-bottom:16px">'
+    +'<div style="font-size:12px;font-weight:700;color:#085041;margin-bottom:8px">Taarifa za Kuingia:</div>'
+    +'<div style="font-size:13px;color:#085041">Nambari ya Simu: <b>'+ph+'</b></div>'
+    +'<div style="font-size:13px;color:#085041;margin-top:4px">Nywila: <b>ile uliyoweka kwenye fomu</b></div>'
+    +'<div style="font-size:11px;color:#0F6E56;margin-top:8px">Unaweza kuingia sasa hivi kuona hali ya ombi lako.</div>'
+    +'</div>'
+    +'<div onclick="showTenantView(\'existing\')" style="display:inline-block;background:#185FA5;color:white;padding:10px 24px;border-radius:8px;cursor:pointer;font-weight:700;font-size:13px;margin-bottom:10px">Ingia Kuona Hali &#8594;</div>'
+    +'<div><a onclick="showTenantView(\'choice\')" style="color:#888;cursor:pointer;font-size:12px">&#8592; Rudi Nyumbani</a></div>'
+    +'</div>';
+  toast('Ombi limewasilishwa! Sasa unaweza kuingia.');
+}
+
 /* ===== TENANT LOGIN ===== */
+function normPhone(p){return p.replace(/[\s\-]/g,'').replace(/^254/,'0').replace(/^255/,'0');}
 function loginTenant(){
-  var ph=document.getElementById('t-phone').value.trim().replace(/\s/g,'');
+  var ph=normPhone(document.getElementById('t-phone').value.trim());
   var pw=document.getElementById('t-pass').value;
   var err=document.getElementById('tenant-err');
+  if(!ph||!pw){
+    err.textContent='Jaza nambari ya simu na nywila.';
+    err.style.display='block';return;
+  }
   var found=null;
   for(var i=0;i<wapangaji.length;i++){
-    if(wapangaji[i].s.replace(/\s/g,'')===ph && wapangaji[i].pw===pw && wapangaji[i].active){
-      found=wapangaji[i]; break;
-    }
+    var w=wapangaji[i];
+    if(normPhone(w.s)===ph && w.pw===pw && w.active){found=w;break;}
   }
-  /* check pending */
+  /* check pending - only if they set a password */
   if(!found){
     for(var j=0;j<pendingWp.length;j++){
-      if(pendingWp[j].ph.replace(/\s/g,'')===ph && pendingWp[j].pw===pw){
-        found={pending:true,fn:pendingWp[j].fn,ln:pendingWp[j].ln,ph:pendingWp[j].ph};break;
+      var pp=pendingWp[j];
+      if(normPhone(pp.ph)===ph && pp.pw && pp.pw===pw){
+        found={pending:true,fn:pp.fn,ln:pp.ln,ph:pp.ph,pid:pp.id};break;
       }
     }
   }
@@ -668,9 +820,29 @@ function loginTenant(){
     if(found.pending){
       document.getElementById('t-pending-notice').style.display='block';
       document.getElementById('t-main').style.display='none';
-      document.getElementById('t-name').textContent=found.fn+' '+found.ln;
-      var ini=(found.fn[0]+(found.ln[0]||'')).toUpperCase();
+      var displayName=found.fn+' '+found.ln;
+      document.getElementById('t-name').textContent=displayName;
+      var ini=(found.fn[0]+(found.ln&&found.ln[0]?found.ln[0]:'')).toUpperCase();
       document.getElementById('t-avatar').textContent=ini;
+      var pData=pendingWp.find(function(x){return x.id===found.pid});
+      document.getElementById('t-pending-notice').innerHTML=
+        '<div style="background:#FFF3CD;border:1px solid #ffc107;border-radius:10px;padding:20px;margin-bottom:12px">'
+        +'<div style="font-size:15px;font-weight:700;color:#856404;margin-bottom:12px">Habari, '+displayName+'!</div>'
+        +'<div style="background:white;border-radius:8px;padding:14px;margin-bottom:12px">'
+        +'<div style="font-size:13px;font-weight:700;margin-bottom:10px">Hali ya Ombi Lako</div>'
+        +'<div style="display:flex;align-items:center;gap:10px;padding:10px;background:#FFF8E1;border-radius:7px;margin-bottom:8px">'
+        +'<div style="width:10px;height:10px;border-radius:50%;background:#FFC107;flex-shrink:0"></div>'
+        +'<div><div style="font-size:12px;font-weight:700;color:#856404">Inasubiri Uthibitisho</div>'
+        +'<div style="font-size:11px;color:#888;margin-top:2px">Tarehe ya ombi: '+(pData?pData.date:'—')+'</div></div></div>'
+        +(pData?'<div style="font-size:11px;color:#666;line-height:1.7">'
+        +'<div>Aina uliyoomba: <b>'+(pData.aina||'—')+'</b></div>'
+        +'<div>Mdhamini: <b>'+(pData.guar||'—')+'</b></div></div>':'')
+        +'</div>'
+        +'<div style="font-size:12px;color:#856404;line-height:1.6;margin-bottom:14px">'
+        +'Mmiliki anaangalia ombi lako na atawasiliana nawe hivi karibuni. '
+        +'Kwa haraka piga simu: <b>+255 735 029 201</b></div>'
+        +'<button onclick="logout()" style="background:white;border:1px solid #ddd;border-radius:6px;padding:7px 16px;cursor:pointer;font-size:12px;width:100%">Toka</button>'
+        +'</div>';
     } else {
       document.getElementById('t-pending-notice').style.display='none';
       document.getElementById('t-main').style.display='block';
@@ -701,6 +873,7 @@ function loadTenantData(w){
   document.getElementById('t-mal-tb').innerHTML=myMal.length?myMal.map(function(x){return'<tr><td>'+x.mw+'</td><td>TSh '+x.k.toLocaleString()+'</td><td>'+x.n+'</td><td><span class="bdg '+(x.h==='Amelipa'?'ok':'bad')+'">'+x.h+'</span></td></tr>'}).join(''):'<tr><td colspan="4" style="text-align:center;color:#888;padding:16px">Hakuna rekodi za malipo bado.</td></tr>';
 }
 
+function tenantSendSMS(){var sub=document.getElementById('t-msg-sub').value,txt=document.getElementById('t-msg-txt').value.trim();if(!txt){toast('Andika ujumbe kwanza!','#E24B4A');return}smsMsg('255735029201','['+sub+'] '+txt);toast('Inafungua SMS...');}
 function tenantSendMsg(){
   var sub=document.getElementById('t-msg-sub').value;
   var txt=document.getElementById('t-msg-txt').value.trim();
@@ -719,48 +892,6 @@ function handleTenantUpload(input){
   setTimeout(function(){
     window.open('https://wa.me/255735029201?text='+encodeURIComponent('Habari Bibi Sitta, nimepakia mkataba wangu uliosainiwa. Tafadhali pokea kwa hifadhi yako. Asante.'),'_blank');
   },800);
-}
-
-/* ===== TENANT REGISTRATION ===== */
-function showTenantReg(){
-  document.getElementById('t-login-view').style.display='none';
-  document.getElementById('t-reg-view').style.display='block';
-}
-function showTenantLogin(){
-  document.getElementById('t-login-view').style.display='block';
-  document.getElementById('t-reg-view').style.display='none';
-}
-function fillTenantRegMali(){
-  var s=document.getElementById('tr-mali');
-  if(s) s.innerHTML='<option value="">Chagua mali...</option>'+mali.filter(function(m){return m.h!=='Imepangishwa'&&!m.sold}).map(function(m){return'<option value="'+m.n+'">'+m.n+' (TSh '+m.k.toLocaleString()+'/mwezi)</option>'}).join('');
-}
-function tregStep(n){
-  [1,2,3].forEach(function(i){
-    var s=document.getElementById('treg-s'+i);if(s)s.style.display=i===n?'block':'none';
-    var sb=document.getElementById('tr'+i);if(sb){sb.classList.remove('cur','done');if(i===n)sb.classList.add('cur');if(i<n)sb.classList.add('done');}
-  });
-}
-function submitTenantReg(){
-  var fn=document.getElementById('tr-fn').value.trim();
-  var ln=document.getElementById('tr-ln').value.trim();
-  var ph=document.getElementById('tr-ph').value.trim();
-  var pw1=document.getElementById('tr-pw1').value;
-  var pw2=document.getElementById('tr-pw2').value;
-  var agree=document.getElementById('tr-agree').checked;
-  if(!fn||!ln||!ph){toast('Jaza taarifa zote!','#E24B4A');return}
-  if(!pw1||pw1!==pw2){toast('Nywila hazifanani!','#E24B4A');return}
-  if(!agree){toast('Lazima ukubaliane na masharti!','#E24B4A');return}
-  pendingWp.push({
-    id:'p'+Date.now(),fn:fn,ln:ln,ph:ph,
-    nid:document.getElementById('tr-nid').value,
-    addr:document.getElementById('tr-addr').value,
-    kazi:document.getElementById('tr-kazi').value,
-    mali:document.getElementById('tr-mali').value,
-    guar:document.getElementById('tr-guar').value,
-    pw:pw1,date:new Date().toISOString().slice(0,10)
-  });
-  document.getElementById('t-reg-view').innerHTML='<div style="text-align:center;padding:2rem 0"><div style="width:56px;height:56px;background:#E1F5EE;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px"><svg width="28" height="28" viewBox="0 0 24 24" fill="#1D9E75"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div><div style="font-size:18px;font-weight:700;margin-bottom:8px">Umefanikiwa!</div><div style="font-size:13px;color:#888;line-height:1.6">Habari '+fn+', maombi yako yamepokewa. Mmiliki ataona na atawasiliana nawe kwa WhatsApp hivi karibuni.<br><br>Unaweza kuingia kwa nambari yako ya simu na nywila uliyoweka.</div><div style="margin-top:16px"><a onclick="showTenantLogin()" style="color:#185FA5;cursor:pointer;font-weight:700">Ingia sasa →</a></div></div>';
-  toast('Maombi yamewasilishwa!');
 }
 
 /* ===== LOGOUT ===== */
@@ -814,6 +945,7 @@ function closeOv(id){document.getElementById(id).classList.remove('open')}
 document.addEventListener('click',function(e){if(e.target.classList.contains('ov'))e.target.classList.remove('open')});
 function toast(msg,col){var t=document.getElementById('toast');t.textContent=msg;t.style.background=col||'#1D9E75';t.classList.add('show');setTimeout(function(){t.classList.remove('show')},3000)}
 function waMsg(phone,msg){window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(msg),'_blank')}
+function smsMsg(phone,msg){window.open('sms:0'+phone.replace(/^255/,'')+'?body='+encodeURIComponent(msg));}
 function fillSelects(){
   var ws=document.getElementById('nw-m');if(ws)ws.innerHTML='<option value="">Chagua mali...</option>'+am().map(function(m){return'<option value="'+m.n+'">'+m.n+'</option>'}).join('');
   var ms=document.getElementById('mal-wp');if(ms)ms.innerHTML='<option value="">Chagua...</option>'+aw().map(function(w){return'<option value="'+w.j+'">'+w.j+'</option>'}).join('');
@@ -846,29 +978,96 @@ function renderDash(){
 }
 
 /* ===== PENDING APPROVE ===== */
+function handleApproveUpload(inp){
+  if(!inp.files||!inp.files[0])return;
+  var f=inp.files[0];
+  document.getElementById('ap-up-lbl').textContent=f.name;
+  document.getElementById('ap-up-zone').classList.add('has');
+  document.getElementById('ap-mk-fname').textContent=f.name;
+  document.getElementById('ap-mk-preview').style.display='block';
+}
+function autoFillApKodi(){
+  var sel=document.getElementById('ap-mali');
+  var m=mali.find(function(x){return x.n===sel.value});
+  if(m) document.getElementById('ap-kodi').value=m.k;
+}
 function openApprove(pid){
   approvePendingId=pid;
   var p=pendingWp.find(function(x){return x.id===pid});
+  if(!p)return;
+  /* Show applicant details */
   var det=document.getElementById('approve-detail');
-  det.innerHTML='<div style="background:#f5f5f5;padding:12px;border-radius:8px;font-size:12px"><div style="font-weight:700;margin-bottom:6px">'+p.fn+' '+p.ln+'</div><div style="color:#666">Simu: '+p.ph+'</div><div style="color:#666">Kazi: '+(p.kazi||'—')+'</div><div style="color:#666">Mdhamini: '+(p.guar||'—')+'</div></div>';
+  det.innerHTML='<div style="background:#f5f5f5;padding:12px;border-radius:8px;font-size:12px">'
+    +'<div style="font-weight:700;font-size:13px;margin-bottom:8px">'+p.fn+' '+p.ln+'</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">'
+    +'<div style="color:#666">Simu: <b>'+p.ph+'</b></div>'
+    +'<div style="color:#666">Kazi: <b>'+(p.kazi||'—')+'</b></div>'
+    +'<div style="color:#666">Mdhamini: <b>'+(p.guar||'—')+'</b></div>'
+    +(p.aina?'<div style="color:#1D9E75;font-weight:700">Aina aliyoomba: '+p.aina+'</div>':'')
+    +'</div></div>';
+  /* Fill mali dropdown with real mali from data */
   var aps=document.getElementById('ap-mali');
-  if(aps)aps.innerHTML=am().filter(function(m){return m.h!=='Imepangishwa'}).map(function(m){return'<option value="'+m.n+'">'+m.n+'</option>'}).join('');
-  if(p.mali){var opt=aps.querySelector('[value="'+p.mali+'"]');if(opt)aps.value=p.mali;}
+  aps.innerHTML='<option value="">— Chagua mali —</option>'
+    +am().map(function(m){
+      var avail=m.h!=='Imepangishwa'&&!m.sold;
+      var label=m.n+' ('+m.a+') — '+m.m+' — TSh '+m.k.toLocaleString()+'/mwezi'+(avail?'':' [Imepangishwa]');
+      return'<option value="'+m.n+'" '+(avail?'':'disabled style="color:#bbb"')+'>'+label+'</option>';
+    }).join('');
+  /* Auto-select mali matching the aina requested */
+  if(p.aina){
+    var availableMali=am().filter(function(m){return m.h!=='Imepangishwa'&&!m.sold});
+    var match=availableMali.find(function(m){
+      return m.a.toLowerCase()===p.aina.toLowerCase()
+          || m.n.toLowerCase().indexOf(p.aina.toLowerCase())>=0;
+    });
+    if(match){
+      aps.value=match.n;
+      document.getElementById('ap-kodi').value=match.k;
+      det.innerHTML+='<div style="background:#E1F5EE;border-radius:7px;padding:8px 10px;font-size:11px;color:#085041;margin-top:8px">'
+        +'Mali iliyochaguliwa kiotomasi: <b>'+match.n+'</b> — unaweza kubadilisha.</div>';
+    }
+  }
+  /* Reset upload UI */
+  document.getElementById('ap-up-lbl').textContent='Bonyeza kupakia';
+  document.getElementById('ap-up-zone').classList.remove('has');
+  document.getElementById('ap-mk-preview').style.display='none';
+  document.getElementById('ap-mk-link').value='';
+  document.getElementById('ap-up-in').value='';
+  /* Auto-fill dates */
+  var today=new Date().toISOString().slice(0,10);
+  document.getElementById('ap-start').value=today;
+  var endDate=new Date(); endDate.setFullYear(endDate.getFullYear()+1);
+  document.getElementById('ap-end').value=endDate.toISOString().slice(0,10);
   openOv('ov-approve-wp');
 }
 function approvePending(){
   var p=pendingWp.find(function(x){return x.id===approvePendingId});
   if(!p)return;
   var maliNm=document.getElementById('ap-mali').value;
-  var k=parseInt(document.getElementById('ap-kodi').value)||0;
+  if(!maliNm){toast('Chagua mali kwanza!','#E24B4A');return;}
   var m=mali.find(function(x){return x.n===maliNm});
+  var k=parseInt(document.getElementById('ap-kodi').value)||0;
   if(!k&&m)k=m.k;
-  wapangaji.push({id:nWp++,j:p.fn+' '+p.ln,s:p.ph,m:maliNm,k:k,e:document.getElementById('ap-end').value||'—',h:'Hajalipa',active:true,pw:p.pw});
+  if(!k){toast('Weka kodi ya mwezi!','#E24B4A');return;}
+  var mkLink=document.getElementById('ap-mk-link').value.trim();
+  var mkFile=document.getElementById('ap-up-in').files&&document.getElementById('ap-up-in').files[0];
+  /* Add to wapangaji */
+  wapangaji.push({
+    id:nWp++,j:p.fn+' '+p.ln,s:p.ph,m:maliNm,k:k,
+    e:document.getElementById('ap-end').value||'—',
+    h:'Hajalipa',active:true,pw:p.pw||p.ph.slice(-4)
+  });
+  /* Update mali status */
   if(m){m.h='Imepangishwa';m.mp=p.fn+' '+p.ln;}
+  /* Remove from pending */
   pendingWp=pendingWp.filter(function(x){return x.id!==approvePendingId});
   closeOv('ov-approve-wp');renderDash();renderWp();
-  toast('Mpangaji amethibitishwa na kuongezwa!');
-  waMsg('255'+p.ph.replace(/^0/,''),'Habari '+p.fn+', akaunti yako ya Nyumba Zangu imethibitishwa! Unaweza sasa kuingia kwa nambari yako ya simu. Karibu!');
+  /* Send WhatsApp with full details */
+  var baseMsg='Habari '+p.fn+', maombi yako ya kupanga yamethibitishwa!\n\nMali: '+maliNm+'\nKodi ya Mwezi: TSh '+k.toLocaleString()+'\nTarehe ya Kuanza: '+document.getElementById('ap-start').value+'\nTarehe ya Mwisho: '+document.getElementById('ap-end').value+'\n\nNywila: nne za mwisho za simu yako.\n\nKaribu! - Sitta Ng\'walida\n+255 735 029 201';
+  if(mkLink) baseMsg+='\n\nMkataba wako: '+mkLink;
+  else if(mkFile) baseMsg+='\n\nMkataba wako utatumwa hivi karibuni.';
+  waMsg('255'+p.ph.replace(/^0/,''),baseMsg);
+  toast('Mpangaji amethibitishwa! WhatsApp inafunguka...');
 }
 function rejectPending(){
   pendingWp=pendingWp.filter(function(x){return x.id!==approvePendingId});
@@ -880,6 +1079,31 @@ function rejectById(pid){
 }
 
 /* ===== MALI ===== */
+var editMaliId=null;
+function openEditMali(id){
+  var m=mali.find(function(x){return x.id===id});
+  if(!m)return;
+  editMaliId=id;
+  document.getElementById('em-n').value=m.n;
+  document.getElementById('em-a').value=m.a;
+  document.getElementById('em-m').value=m.m==='—'?'':m.m;
+  document.getElementById('em-k').value=m.k;
+  document.getElementById('em-h').value=m.h;
+  openOv('ov-edit-mali');
+}
+function saveEditMali(){
+  var m=mali.find(function(x){return x.id===editMaliId});
+  if(!m)return;
+  var n=document.getElementById('em-n').value.trim();
+  if(!n){toast('Jaza jina la mali!','#E24B4A');return;}
+  m.n=n;
+  m.a=document.getElementById('em-a').value;
+  m.m=document.getElementById('em-m').value||'—';
+  m.k=parseInt(document.getElementById('em-k').value)||0;
+  m.h=document.getElementById('em-h').value;
+  closeOv('ov-edit-mali');renderMali();renderDash();
+  toast('Mali imeharirishwa!');
+}
 function renderMali(){document.getElementById('mali-tb').innerHTML=am().map(function(m){return'<tr><td style="font-weight:700">'+m.n+'</td><td>'+m.a+'</td><td>'+m.m+'</td><td>'+m.k.toLocaleString()+'</td><td>'+(m.mp||'—')+'</td><td><span class="bdg '+(m.h==='Imepangishwa'?'ok':m.h==='Haijakaa'?'warn':'gr')+'">'+m.h+'</span></td><td><button class="btn-sm" style="margin-right:3px">Hariri</button><button class="btn-sm btn-r" onclick="openSell('+m.id+')">Uza/Toa</button></td></tr>'}).join('')}
 function saveMali(){var n=document.getElementById('nm-n').value.trim();if(!n){toast('Jaza jina la mali!','#E24B4A');return}mali.push({id:nMali++,n:n,a:document.getElementById('nm-a').value,m:document.getElementById('nm-m').value||'—',k:parseInt(document.getElementById('nm-k').value)||0,mp:'',h:document.getElementById('nm-h').value,sold:false});closeOv('ov-add-mali');renderMali();renderDash();toast('Mali mpya imehifadhiwa!');document.getElementById('nm-n').value='';document.getElementById('nm-k').value='';}
 function openSell(id){sellId=id;var m=mali.find(function(x){return x.id===id});document.getElementById('sell-nm').value=m.n;document.getElementById('sell-dt').valueAsDate=new Date();openOv('ov-sell-mali')}
@@ -915,6 +1139,7 @@ function confirmSendMsg(){var txt=document.getElementById('msg-txt').value.trim(
 function renderRip(){var el=document.getElementById('rip-mali');if(!el)return;el.innerHTML=am().map(function(m){var w=wapangaji.find(function(x){return x.m===m.n&&x.active});var h=w?w.h:'Haijakaa';return'<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #f0f0f0"><span style="font-weight:700">'+m.n+'</span><span style="color:#888">'+m.k.toLocaleString()+'</span><span class="bdg '+(h==='Amelipa'?'ok':h==='Hajalipa'?'bad':'warn')+'">'+h+'</span></div>'}).join('');}
 
 /* ===== SEND WA ALL ===== */
+function sendSMSAll(){var hl=aw().filter(function(w){return w.h==='Hajalipa'});if(!hl.length){toast('Wapangaji wote wamelipa!');return}hl.forEach(function(w,i){setTimeout(function(){smsMsg('255'+w.s.replace(/^0/,''),'Habari '+w.j+', kumbusho: kodi yako ya Machi TSh '+w.k.toLocaleString()+' haijalipiwa. Tafadhali lipa. Asante.')},i*700)});toast('SMS zinatumwa kwa wapangaji '+hl.length);}
 function sendWAAll(){var hl=aw().filter(function(w){return w.h==='Hajalipa'});if(!hl.length){toast('Wapangaji wote wamelipa!');return}hl.forEach(function(w,i){setTimeout(function(){waMsg('255'+w.s.replace(/^0/,''),'Habari '+w.j+', kumbusho: kodi yako ya Machi TSh '+w.k.toLocaleString()+' haijalipiwa. Tafadhali lipa. Asante.')},i*700)});toast('Ujumbe unatumwa kwa wapangaji '+hl.length);}
 </script>
 </body>
